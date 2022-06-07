@@ -180,3 +180,7 @@ This syntax works in create-react-app, since it uses `svgr` under the hood. But 
 Now that we have our sign in and sign up pages setup. First we will sign them up (and get them authenticated) and then later we will add them to the users collection.
 
 Use this link for sign up : https://firebase.google.com/docs/auth/web/start#web-version-9_1
+
+Now we'll add the user that we received from the `createUserWithEmailAndPassword` function to the `firestore` collection called `users`
+
+Use this for docs : https://firebase.google.com/docs/firestore/manage-data/add-data#web-version-9

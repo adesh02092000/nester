@@ -8,6 +8,9 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth'
+
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
+
 import { db } from '../firebase.config'
 
 export default function SignUp() {
@@ -51,6 +54,15 @@ export default function SignUp() {
       updateProfile(auth.currentUser, {
         displayName: name,
       })
+
+      const formDataCopy = { ...formData }
+      delete formDataCopy.password
+      formDataCopy.timestamp = serverTimestamp()
+
+      // setDoc() will add the data to the collection, which takes in a doc(), that takes the
+      // firestore instance(db), collection (users), user id(user.uid), and the 2nd arg to setDoc is
+      // the object containing the data to store
+      await setDoc(doc(db, 'users', user.uid), formDataCopy)
 
       navigate('/')
     } catch (error) {
