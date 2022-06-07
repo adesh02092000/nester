@@ -174,3 +174,9 @@ import { ReactComponent as OfferIcon } from '../assets/svg/localOfferIcon.svg'
 ```
 
 This syntax works in create-react-app, since it uses `svgr` under the hood. But to use it with the vite build, we need to install the `svgr` plugin for vite.
+
+#### Firebase Authentication and Profiles
+
+Now that we have our sign in and sign up pages setup. First we will sign them up (and get them authenticated) and then later we will add them to the users collection.
+
+Use this link for sign up : https://firebase.google.com/docs/auth/web/start#web-version-9_1
