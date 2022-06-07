@@ -158,3 +158,10 @@ Can write only if authenticated and the image size must be less than 2MB
 Here we are making the indexes manually but when we run our query in our app code we get a link for generating the required index. (which is the recommended way)
 
 :heavy_check_mark: Firebase setup done.
+
+### The Plan ahead
+
+Next let's create a basic layout for the pages like Explore, offers, sign up and so on. (Only layout no logic)
+Then we'll tackle the sign in and sign up feature with email or google, also the forget password feature.
+And then we will move to actual logic of listing the houses
+
