@@ -156,14 +156,14 @@ button {
   width: 100%;
   margin-top: 0.75rem;
   overflow-y: hidden;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .navbarListItems {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
 }
 
 .navbarListItem {

@@ -165,3 +165,12 @@ Next let's create a basic layout for the pages like Explore, offers, sign up and
 Then we'll tackle the sign in and sign up feature with email or google, also the forget password feature.
 And then we will move to actual logic of listing the houses
 
+Creating of pages and routes done.
+
+Put the `Navbar` inside the `<Router>`, since we are going to use hooks like `useNavigate`
+
+```jsx
+import { ReactComponent as OfferIcon } from '../assets/svg/localOfferIcon.svg'
+```
+
+This syntax works in create-react-app, since it uses `svgr` under the hood. But to use it with the vite build, we need to install the `svgr` plugin for vite.
