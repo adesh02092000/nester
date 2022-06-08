@@ -35,6 +35,7 @@ export default function Profile() {
   }
 
   const onSubmit = async () => {
+    // The user can only edit the user name not the email
     try {
       if (name !== auth.currentUser.displayName) {
         // Update the name in firebase/auth if changed
@@ -88,8 +89,8 @@ export default function Profile() {
               <input
                 type='text'
                 id='email'
-                className={enableEdit ? 'profileEmailActive' : 'profileEmail'}
-                disabled={!enableEdit}
+                className='profileEmail'
+                disabled={true}
                 value={email}
                 onChange={onChange}
               />

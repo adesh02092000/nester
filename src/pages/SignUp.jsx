@@ -61,7 +61,7 @@ export default function SignUp() {
       delete formDataCopy.password
       formDataCopy.timestamp = serverTimestamp()
 
-      // setDoc() will add the data to the collection, which takes in a doc(), that takes the
+      // setDoc() will add the data to the collection(It's the create in CRUD), which takes in a doc(), that takes the
       // firestore instance(db), collection (users), user id(user.uid), and the 2nd arg to setDoc is
       // the object containing the data to store
       await setDoc(doc(db, 'users', user.uid), formDataCopy)
