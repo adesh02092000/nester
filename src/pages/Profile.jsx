@@ -1,8 +1,9 @@
 import { getAuth, updateProfile } from 'firebase/auth'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { updateDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
+import { toast } from 'react-toastify'
 
 export default function Profile() {
   const auth = getAuth()
@@ -33,8 +34,22 @@ export default function Profile() {
     })
   }
 
-  const onSubmit = () => {
-    console.log('Form Submitted')
+  const onSubmit = async () => {
+    try {
+      if (name !== auth.currentUser.displayName) {
+        // Update the name in firebase/auth if changed
+        await updateProfile(auth.currentUser, {
+          displayName: name,
+        })
+        // Update the name in firestore
+        const userRef = doc(db, 'users', auth.currentUser.uid)
+        await updateDoc(userRef, {
+          name,
+        })
+      }
+    } catch (error) {
+      toast.error('Unable to submit changes')
+    }
   }
 
   return (
