@@ -191,7 +191,7 @@ https://fkhadra.github.io/react-toastify/installation
 
 ```jsx
   import React from 'react';
-  // Bring in the ToastContainer, toast function and the css in App.js
+  // Bring in the ToastContainer and the css in App.js
   import { ToastContainer, toast } from 'react-toastify';
 
   import 'react-toastify/dist/ReactToastify.css';
@@ -210,3 +210,10 @@ https://fkhadra.github.io/react-toastify/installation
   }
 ```
 
+### Checking the logged in status of users in firebase
+
+We'll create a custom hook to do this, we'll also use a `firebase/auth` function `onAuthStateChanged` which fires whenever the logging state changes (logged in to log out or vice-versa)
+
+The `onAuthStateChanged` function takes the `auth` variable and a function that gives the user status
+
+https://stackoverflow.com/questions/65505665/protected-route-with-firebase 
