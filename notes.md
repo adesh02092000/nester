@@ -217,3 +217,7 @@ We'll create a custom hook to do this, we'll also use a `firebase/auth` function
 The `onAuthStateChanged` function takes the `auth` variable and a function that gives the user status
 
 https://stackoverflow.com/questions/65505665/protected-route-with-firebase 
+
+### Google `OAuth`
+
+With the forgot password functionality done, all that is left is google `Oauth` in the authentication part. Let's tackle it in this commit
