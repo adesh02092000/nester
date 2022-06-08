@@ -4,6 +4,8 @@ import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRig
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
+import { toast } from 'react-toastify'
+
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -40,7 +42,8 @@ export default function SignIn() {
         navigate('/')
       }
     } catch (error) {
-      console.log(error)
+      // console.log(error)
+      toast.error('Bad User Credentials')
     }
   }
 

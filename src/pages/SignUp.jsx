@@ -13,6 +13,8 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 
 import { db } from '../firebase.config'
 
+import { toast } from 'react-toastify'
+
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -66,7 +68,8 @@ export default function SignUp() {
 
       navigate('/')
     } catch (error) {
-      console.log(error)
+      // console.log(error)
+      toast.error('Unable to Register')
     }
   }
 

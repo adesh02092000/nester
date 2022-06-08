@@ -184,3 +184,29 @@ Use this link for sign up : https://firebase.google.com/docs/auth/web/start#web-
 Now we'll add the user that we received from the `createUserWithEmailAndPassword` function to the `firestore` collection called `users`
 
 Use this for docs : https://firebase.google.com/docs/firestore/manage-data/add-data#web-version-9
+
+### Using the cool React `Toastify` package for alerts
+
+https://fkhadra.github.io/react-toastify/installation
+
+```jsx
+  import React from 'react';
+  // Bring in the ToastContainer, toast function and the css in App.js
+  import { ToastContainer, toast } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
+  // import 'react-toastify/dist/ReactToastify.min.css';
+
+  function App(){
+    const notify = () => toast("Wow so easy !");
+
+    return (
+      <div>
+        <button onClick={notify}>Notify !</button>
+        	{/* Add the ToastContainer to App.js and then you can call the toast function where ever you want the alerts */}
+            <ToastContainer />
+      </div>
+    );
+  }
+```
+
