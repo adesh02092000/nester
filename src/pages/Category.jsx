@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { db } from '../firebase.config'
 
 export default function Category() {
@@ -20,6 +21,7 @@ export default function Category() {
   useEffect(() => {
     const fetchListings = async () => {
       try {
+        setLoading(true)
         // Get the listings (collection) reference
         const listingsRef = collection(db, 'listings')
         // Create a query
@@ -32,11 +34,20 @@ export default function Category() {
         // Execute the query
         const querySnap = await getDocs(q)
 
+        const listings = []
+
         querySnap.forEach(doc => {
-          // doc.data() give all the data for a document, except for the id
-          console.log(doc.data())
+          listings.push({
+            id: doc.id,
+            data: doc.data(),
+          })
         })
-      } catch (error) {}
+
+        setListings(listings)
+        setLoading(false)
+      } catch (error) {
+        toast.error('Could not fetch listings')
+      }
     }
 
     fetchListings()
