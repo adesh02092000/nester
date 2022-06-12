@@ -62,9 +62,33 @@ export default function CreateListing() {
 
   const onSubmit = e => {
     e.preventDefault()
+    console.log(formData)
   }
 
-  const onMutate = () => {}
+  const onMutate = e => {
+    let boolean = null
+
+    // Convert the string value to boolean
+    if (e.target.value === 'true') boolean = true
+    if (e.target.value === 'false') boolean = false
+
+    // Files
+    if (e.target.files) {
+      setFormData(prevState => ({
+        ...prevState,
+        images: e.target.files,
+      }))
+    }
+
+    // string/boolean/number
+    if (!e.target.files) {
+      setFormData(prevState => ({
+        ...prevState,
+        // if boolean is null use e.target.value, else use boolean
+        [e.target.id]: boolean ?? e.target.value,
+      }))
+    }
+  }
 
   if (loading) {
     return <Spinner />
