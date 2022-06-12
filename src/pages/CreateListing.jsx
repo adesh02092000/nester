@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function CreateListing() {
+  const [geolocationEnabled, setGeolocationEnabled] = useState(true)
+  const [loading, isLoading] = useState(false)
   const [formData, setFormData] = useState({
     type: 'rent',
     name: '',
@@ -22,6 +24,8 @@ export default function CreateListing() {
   const auth = getAuth()
   const navigate = useNavigate()
   const isMounted = useRef(true)
+  //   isMounted is used since we only want to set the form data while the createListing component
+  // is mounted, Otherwise it may cause memoryLeaks
 
   useEffect(() => {
     if (isMounted) {
