@@ -78,7 +78,7 @@ export default function Offers() {
           </main>
         </>
       ) : (
-        <p>No offers avaialable currently</p>
+        <p>No offers available currently</p>
       )}
     </div>
   )
