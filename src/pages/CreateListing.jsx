@@ -3,6 +3,14 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage'
+import { db } from '../firebase.config'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function CreateListing() {
   const [geolocationEnabled, setGeolocationEnabled] = useState(false)
@@ -106,6 +114,66 @@ export default function CreateListing() {
       geolocation.lng = longitude
       location = address
     }
+
+    // Store image in firebase Store
+    const storeImage = async image => {
+      return new Promise((resolve, reject) => {
+        setLoading(true)
+
+        // Initialize the storage
+        const storage = getStorage()
+        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`
+
+        const storageRef = ref(storage, 'images/' + fileName)
+
+        const uploadTask = uploadBytesResumable(storageRef, image)
+
+        uploadTask.on(
+          'state_changed',
+          snapshot => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            console.log('Upload is ' + progress + '% done')
+            switch (snapshot.state) {
+              case 'paused':
+                console.log('Upload is paused')
+                break
+              case 'running':
+                console.log('Upload is running')
+                break
+            }
+          },
+          error => {
+            // Handle unsuccessful uploads
+            setLoading(false)
+            reject(error)
+          },
+          () => {
+            setLoading(false)
+
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+              resolve(downloadURL)
+            })
+          }
+        )
+      })
+    }
+
+    // Loop through each image in the state and try uploading it,
+    // if successful all the download URL's will be in the imgUrls array,
+    // else we log the error
+    const imgUrls = await Promise.all(
+      [...images].map(image => storeImage(image))
+    ).catch(() => {
+      setLoading(false)
+      toast.error('Unable to upload images')
+      return
+    })
+    console.log(imgUrls)
 
     setLoading(false)
   }
