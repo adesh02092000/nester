@@ -11,6 +11,7 @@ import {
 } from 'firebase/storage'
 import { db } from '../firebase.config'
 import { v4 as uuidv4 } from 'uuid'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 
 export default function CreateListing() {
   const [geolocationEnabled, setGeolocationEnabled] = useState(false)
@@ -173,9 +174,28 @@ export default function CreateListing() {
       toast.error('Unable to upload images')
       return
     })
-    console.log(imgUrls)
 
+    const formDataCopy = {
+      ...formData,
+      imgUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+    }
+
+    // Data cleanup
+
+    delete formDataCopy.images
+    delete formDataCopy.address
+    // add the location value
+    location && (formDataCopy.location = location)
+    // delete the discountedPrice field if offer is set to no
+    !formDataCopy.offer && delete formDataCopy.discountedPrice
+
+    // Add the document in firestore
+    const docRef = await addDoc(collection(db, 'listings'), formDataCopy)
     setLoading(false)
+    toast.success('Listing Added Successfully')
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`)
   }
 
   const onMutate = e => {
