@@ -424,7 +424,8 @@ export default function CreateListing() {
 
           <label className='formLabel'>Images</label>
           <p className='imagesInfo'>
-            The first image will be the cover (max 6).
+            The first image will be the cover (max 6 images with size less than
+            2 MB each).
           </p>
           <input
             className='formInputFile'
