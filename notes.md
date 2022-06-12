@@ -221,3 +221,8 @@ https://stackoverflow.com/questions/65505665/protected-route-with-firebase
 ### Google `OAuth`
 
 With the forgot password functionality done, all that is left is google `Oauth` in the authentication part. Let's tackle it in this commit
+
+With the firebase authentication done, we now can work on the main listings part of the project
+
+### Get & Create Listings
+
