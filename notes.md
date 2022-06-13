@@ -226,3 +226,6 @@ With the firebase authentication done, we now can work on the main listings part
 
 ### Get & Create Listings
 
+##### Uploading images to firebase
+
+https://firebase.google.com/docs/storage/web/upload-files#monitor_upload_progress
