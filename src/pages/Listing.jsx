@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 
 export default function Listing() {
   const [listing, setListing] = useState(null)
@@ -80,7 +81,25 @@ export default function Listing() {
           <li>{listing.furnished && 'Furnished'}</li>
         </ul>
         <p className='listingLocationTitle'>Location</p>
-        {/* MAP */}
+
+        <div className='leafletContainer'>
+          <MapContainer
+            style={{ height: '100%', width: '100%' }}
+            center={[listing.geolocation.lat, listing.geolocation.lng]}
+            zoom={13}
+            scrollWheelZoom={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            />
+            <Marker
+              position={[listing.geolocation.lat, listing.geolocation.lng]}
+            >
+              <Popup>{listing.location}</Popup>
+            </Marker>
+          </MapContainer>
+        </div>
 
         {/* Add contact info if the listing doesn't belong to the user */}
         {auth.currentUser?.uid !== listing.userRef && (

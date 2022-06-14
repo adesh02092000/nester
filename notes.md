@@ -229,3 +229,32 @@ With the firebase authentication done, we now can work on the main listings part
 ##### Uploading images to firebase
 
 https://firebase.google.com/docs/storage/web/upload-files#monitor_upload_progress
+
+### Leaflet map
+
+We need 2 packages leaflet and react-leaflet
+
+```shell
+npm i leaflet react-leaflet
+```
+
+https://leafletjs.com/examples/quick-start/
+
+https://react-leaflet.js.org/
+
+Add the `CSS` from the quick start guide to the index HTML page : 
+```html
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+   crossorigin=""/>
+```
+
+In the `create-react-app` built import this from react-leaflet :
+```js
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+```
+
+Gives a error : File processed with loaders, you need additional loader to handle the result of these loaders
+Use the following link to fix it : https://stackoverflow.com/questions/67552020/how-to-fix-error-failed-to-compile-node-modules-react-leaflet-core-esm-pat
+
+In our case (vite build) this does not gives and error
