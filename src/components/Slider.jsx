@@ -61,7 +61,13 @@ export default function Slider() {
                   height: '400px',
                 }}
                 className='swiperSlideDiv'
-              ></div>
+              >
+                <p className='swiperSlideText'>{data.name}</p>
+                <p className='swiperSlidePrice'>
+                  ${data.discountedPrice ?? data.regularPrice}
+                  {data.type === 'rent' && ' / Month'}
+                </p>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
