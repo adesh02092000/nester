@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -93,6 +94,19 @@ export default function Profile() {
     }
   }
 
+  const onDelete = async listingId => {
+    if (window.confirm('Are You Sure Your want to delete this listing?')) {
+      // Delete from firestore
+      await deleteDoc(doc(db, 'listings', listingId))
+      // Update the UI (the UI will be update when the user refreshes but to be responsive)
+      const updateListings = listings.filter(
+        listing => listing.id !== listingId
+      )
+      setListings(updateListings)
+      toast.success('Successfully deleted the listing')
+    }
+  }
+
   return (
     <>
       <div className='profile'>
@@ -151,6 +165,9 @@ export default function Profile() {
                     key={listing.id}
                     listing={listing.data}
                     id={listing.id}
+                    onDelete={() => {
+                      onDelete(listing.id)
+                    }}
                   />
                 ))}
               </ul>

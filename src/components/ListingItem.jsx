@@ -3,7 +3,7 @@ import bedIcon from '../assets/svg/bedIcon.svg'
 import bathtubIcon from '../assets/svg/bathtubIcon.svg'
 import { Link } from 'react-router-dom'
 
-export default function ListingItem({ listing, id }) {
+export default function ListingItem({ listing, id, onDelete }) {
   return (
     <li className='categoryListing'>
       <Link
@@ -43,6 +43,14 @@ export default function ListingItem({ listing, id }) {
           </div>
         </div>
       </Link>
+
+      {onDelete && (
+        <DeleteIcon
+          className='removeIcon'
+          fill='rgb(231, 76,60)'
+          onClick={() => onDelete(listing.id, listing.name)}
+        />
+      )}
     </li>
   )
 }
