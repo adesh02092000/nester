@@ -107,6 +107,10 @@ export default function Profile() {
     }
   }
 
+  const onEdit = listingId => {
+    navigate(`/edit-listing/${listingId}`)
+  }
+
   return (
     <>
       <div className='profile'>
@@ -167,6 +171,9 @@ export default function Profile() {
                     id={listing.id}
                     onDelete={() => {
                       onDelete(listing.id)
+                    }}
+                    onEdit={() => {
+                      onEdit(listing.id)
                     }}
                   />
                 ))}
