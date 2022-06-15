@@ -14,6 +14,7 @@ import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import arrowRightIcon from '../assets/svg/keyboardArrowRightIcon.svg'
 import homeIcon from '../assets/svg/homeIcon.svg'
+import ListingItem from '../components/ListingItem'
 
 export default function Profile() {
   const auth = getAuth()
@@ -53,7 +54,6 @@ export default function Profile() {
       })
 
       setListings(listings)
-      console.log(listings)
       setLoading(false)
     }
 
@@ -141,6 +141,21 @@ export default function Profile() {
             <p>Sell or Rent your apartment</p>
             <img src={arrowRightIcon} alt='arrow right' />
           </Link>
+
+          {!loading && listings?.length > 0 && (
+            <>
+              <p className='listingText'>Your Listings</p>
+              <ul className='listingsList'>
+                {listings.map(listing => (
+                  <ListingItem
+                    key={listing.id}
+                    listing={listing.data}
+                    id={listing.id}
+                  />
+                ))}
+              </ul>
+            </>
+          )}
         </main>
       </div>
     </>
