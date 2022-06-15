@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
 import {
@@ -11,9 +11,10 @@ import {
 } from 'firebase/storage'
 import { db } from '../firebase.config'
 import { v4 as uuidv4 } from 'uuid'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore'
 
 export default function EditListing() {
+  const [listing, setListing] = useState(null)
   const [geolocationEnabled, setGeolocationEnabled] = useState(false)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -50,7 +51,27 @@ export default function EditListing() {
 
   const auth = getAuth()
   const navigate = useNavigate()
+  const params = useParams()
   const isMounted = useRef(true)
+
+  // Fetch the listing data and pre-fill the form
+  useEffect(() => {
+    setLoading(true)
+    const fetchListing = async () => {
+      const docRef = doc(db, 'listings', params.listingId)
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists()) {
+        setListing(docSnap.data())
+        setFormData({ ...docSnap.data(), address: docSnap.data().location })
+        setLoading(false)
+      } else {
+        navigate('/')
+        toast.error('Invalid Listing')
+      }
+    }
+
+    fetchListing()
+  }, [])
 
   //   isMounted is used since we only want to set the form data while the EditListing component
   // is mounted, Otherwise it may cause memoryLeaks
@@ -192,8 +213,9 @@ export default function EditListing() {
     // delete the discountedPrice field if offer is set to no
     !formDataCopy.offer && delete formDataCopy.discountedPrice
 
-    // Add the document in firestore
-    const docRef = await addDoc(collection(db, 'listings'), formDataCopy)
+    // Update the document in firestore
+    const docRef = doc(db, 'listings', params.listingId)
+    await updateDoc(docRef, formDataCopy)
     setLoading(false)
     toast.success('Listing Added Successfully')
     navigate(`/category/${formDataCopy.type}/${docRef.id}`)
