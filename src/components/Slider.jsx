@@ -58,7 +58,7 @@ export default function Slider() {
                 style={{
                   background: `url(${data.imgUrls[0]}) center no-repeat`,
                   backgroundSize: 'contain',
-                  height: '350px',
+                  height: '400px',
                 }}
                 className='swiperSlideDiv'
               ></div>
