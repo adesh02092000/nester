@@ -39,6 +39,11 @@ export default function Slider() {
     return <Spinner />
   }
 
+  // Don't render the slider if there are no listings
+  if (listings.length === 0) {
+    return <></>
+  }
+
   return (
     listings && (
       <>
