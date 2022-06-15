@@ -45,8 +45,6 @@ export default function Listing() {
         modules={[Navigation, Pagination, Scrollbar, A11y]}
         slidesPerView={1}
         pagination={{ clickable: true }}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={swiper => console.log(swiper)}
       >
         {listing.imgUrls.map((url, index) => (
           <SwiperSlide key={index}>
