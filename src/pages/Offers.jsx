@@ -17,6 +17,7 @@ import { db } from '../firebase.config'
 export default function Offers() {
   const [listings, setListings] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [lastFetchedListing, setLastFetchedListing] = useState(null)
 
   const params = useParams()
 
@@ -31,10 +32,13 @@ export default function Offers() {
           listingsRef,
           where('offer', '==', true),
           orderBy('timestamp', 'desc'),
-          limit(10)
+          limit(1)
         )
         // Execute the query
         const querySnap = await getDocs(q)
+
+        const lastVisibleListing = querySnap.docs[querySnap.docs.length - 1]
+        setLastFetchedListing(lastVisibleListing)
 
         const listings = []
 
@@ -54,6 +58,40 @@ export default function Offers() {
 
     fetchListings()
   }, [])
+
+  // Pagination
+  const onFetchMoreListings = async () => {
+    try {
+      setLoading(true)
+      const listingsRef = collection(db, 'listings')
+      const q = query(
+        listingsRef,
+        where('offer', '==', true),
+        orderBy('timestamp', 'desc'),
+        startAfter(lastFetchedListing),
+        limit(1)
+      )
+      const querySnap = await getDocs(q)
+
+      const lastVisibleListing = querySnap.docs[querySnap.docs.length - 1]
+      setLastFetchedListing(lastVisibleListing)
+
+      const listings = []
+
+      querySnap.forEach(doc => {
+        listings.push({
+          id: doc.id,
+          data: doc.data(),
+        })
+      })
+
+      // Add new listings to the previous once
+      setListings(prevListings => [...prevListings, ...listings])
+      setLoading(false)
+    } catch (error) {
+      toast.error('Could not fetch listings')
+    }
+  }
 
   return (
     <div className='category'>
@@ -76,6 +114,15 @@ export default function Offers() {
               ))}
             </ul>
           </main>
+
+          <br />
+          <br />
+
+          {lastFetchedListing && (
+            <p className='loadMore' onClick={onFetchMoreListings}>
+              Load More
+            </p>
+          )}
         </>
       ) : (
         <p>No offers available currently</p>
