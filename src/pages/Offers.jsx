@@ -32,7 +32,7 @@ export default function Offers() {
           listingsRef,
           where('offer', '==', true),
           orderBy('timestamp', 'desc'),
-          limit(1)
+          limit(5)
         )
         // Execute the query
         const querySnap = await getDocs(q)
@@ -69,7 +69,7 @@ export default function Offers() {
         where('offer', '==', true),
         orderBy('timestamp', 'desc'),
         startAfter(lastFetchedListing),
-        limit(1)
+        limit(5)
       )
       const querySnap = await getDocs(q)
 

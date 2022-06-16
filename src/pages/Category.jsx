@@ -32,7 +32,7 @@ export default function Category() {
           listingsRef,
           where('type', '==', params.categoryName),
           orderBy('timestamp', 'desc'),
-          limit(1)
+          limit(5)
         )
         // Execute the query
         const querySnap = await getDocs(q)
@@ -71,7 +71,7 @@ export default function Category() {
         where('type', '==', params.categoryName),
         orderBy('timestamp', 'desc'),
         startAfter(lastFetchedListing),
-        limit(10)
+        limit(5)
       )
       // Execute the query
       const querySnap = await getDocs(q)
