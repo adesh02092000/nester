@@ -31,7 +31,6 @@ export default function OAuth() {
       navigate('/')
     } catch (error) {
       toast.error('Could not login with google')
-      console.log(error)
     }
   }
 

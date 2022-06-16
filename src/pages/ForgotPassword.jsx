@@ -15,7 +15,6 @@ export default function ForgotPassword() {
       toast.success('Reset Email send')
     } catch (error) {
       toast.error('Could not send reset link')
-      console.log(error)
     }
   }
 
