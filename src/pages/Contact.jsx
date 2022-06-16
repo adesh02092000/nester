@@ -58,7 +58,7 @@ export default function Contact() {
                 'listingName'
               )}&body=${message}`}
             >
-              <button className='primaryButton' type='button'>
+              <button className='primaryButton ContactButton' type='button'>
                 Send Message
               </button>
             </a>

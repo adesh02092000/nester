@@ -408,6 +408,9 @@ button {
   .exploreCategoryName {
     margin-bottom: 100px !important;
   }
+  .ContactButton {
+    margin-bottom: 100px !important;
+  }
 }
 
 .category {
